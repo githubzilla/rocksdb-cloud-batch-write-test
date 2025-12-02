@@ -589,7 +589,13 @@ int main(int argc, char **argv) {
     cloud_fs_options.src_bucket.SetBucketPrefix("");
   }
 
+  // Set region for src_bucket
+  cloud_fs_options.src_bucket.SetRegion(aws_region);
+
   cloud_fs_options.dest_bucket = cloud_fs_options.src_bucket;
+
+  // Set region for dest_bucket (explicitly set to ensure it's configured)
+  cloud_fs_options.dest_bucket.SetRegion(aws_region);
 
   cloud_fs_options.resync_on_open = true;
 
