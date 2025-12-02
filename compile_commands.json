@@ -1,0 +1,338 @@
+[
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -o CMakeFiles/batch_write_test.dir/src/batch_write_test.cc.o -c /home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/batch_write_test.cc",
+  "file": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/batch_write_test.cc",
+  "output": "CMakeFiles/batch_write_test.dir/src/batch_write_test.cc.o"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_file_system.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_file_system.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/advanced_cache.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/advanced_cache.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cache.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cache.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/compression_type.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/compression_type.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/rocksdb_namespace.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/rocksdb_namespace.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/types.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/types.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/slice.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/slice.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cleanable.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cleanable.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/data_structure.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/data_structure.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/memory_allocator.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/memory_allocator.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/customizable.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/customizable.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/configurable.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/configurable.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/status.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/status.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/options.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/options.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/advanced_options.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/advanced_options.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/memtablerep.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/memtablerep.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/universal_compaction.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/universal_compaction.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/comparator.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/comparator.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/env.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/env.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/functor_wrapper.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/functor_wrapper.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/port_defs.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/port_defs.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/thread_status.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/thread_status.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/file_checksum.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/file_checksum.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/listener.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/listener.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/compaction_job_stats.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/compaction_job_stats.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/io_status.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/io_status.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/table_properties.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/table_properties.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/pre_release_callback.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/pre_release_callback.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/sst_partitioner.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/sst_partitioner.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/version.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/version.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/write_buffer_manager.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/write_buffer_manager.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/file_system.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/file_system.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/table.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/table.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_file_system_impl.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_file_system_impl.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_storage_provider.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cloud/cloud_storage_provider.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/cloud/db_cloud.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/cloud/db_cloud.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/db.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/db.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/block_cache_trace_writer.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/block_cache_trace_writer.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/system_clock.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/system_clock.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/table_reader_caller.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/table_reader_caller.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/trace_reader_writer.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/trace_reader_writer.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/trace_record.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/trace_record.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/iterator.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/iterator.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/wide_columns.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/wide_columns.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/metadata.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/metadata.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/snapshot.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/snapshot.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/sst_file_writer.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/sst_file_writer.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/transaction_log.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/transaction_log.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/write_batch.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/write_batch.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/write_batch_base.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/write_batch_base.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/utilities/stackable_db.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/utilities/stackable_db.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/utilities/options_util.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/utilities/options_util.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /usr/local/include/rocksdb_cloud_header/rocksdb/convenience.h",
+  "file": "/usr/local/include/rocksdb_cloud_header/rocksdb/convenience.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/rate_limiter.h",
+  "file": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/rate_limiter.h"
+},
+
+{
+  "directory": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/bld",
+  "command": "/usr/bin/c++ -I/usr/local/include/rocksdb_cloud_header -g -std=gnu++17 -c /home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/statistics.h",
+  "file": "/home/tianxj/workspace/tmp/rocksdb-cloud-batch-write-test/src/statistics.h"
+}
+]
