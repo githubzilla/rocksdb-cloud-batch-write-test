@@ -4,8 +4,10 @@
 #include <chrono>
 #include <csignal>
 #include <cstdio>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -190,6 +192,19 @@ std::string GenerateStringOfSize(size_t target_size, const std::string &base) {
   return result;
 }
 
+// Helper function to get current timestamp as string
+std::string GetCurrentTimestamp() {
+  auto now = std::chrono::system_clock::now();
+  auto time_t = std::chrono::system_clock::to_time_t(now);
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+      now.time_since_epoch()) % 1000;
+  
+  std::stringstream ss;
+  ss << std::put_time(std::localtime(&time_t), "%Y-%m-%d %H:%M:%S");
+  ss << "." << std::setfill('0') << std::setw(3) << ms.count();
+  return ss.str();
+}
+
 // Helper function to format throughput in KB/s and MB/s
 void PrintDataThroughput(double throughput_bytes_per_sec) {
   double throughput_kb_per_sec = throughput_bytes_per_sec / 1024.0;
@@ -209,6 +224,7 @@ void PrintDataThroughput(double throughput_bytes_per_sec) {
 void PrintIntervalStats(const Statistics::Stats &stats_result,
                         int64_t interval_seconds) {
   std::cout << "\n=== Interval Stats (interval: " << interval_seconds << "s) ===" << std::endl;
+  std::cout << "Timestamp: " << GetCurrentTimestamp() << std::endl;
   std::cout << "Batches in interval: " << stats_result.count << std::endl;
   std::cout << "Latency statistics (nanoseconds):" << std::endl;
   std::cout << "  Min:    " << stats_result.min_ns << std::endl;
@@ -232,6 +248,7 @@ void PrintIntervalStats(const Statistics::Stats &stats_result,
 void PrintCumulativeStats(const Statistics::Stats &stats_result,
                           int64_t total_seconds) {
   std::cout << "\n=== Final Cumulative Results ===" << std::endl;
+  std::cout << "Timestamp: " << GetCurrentTimestamp() << std::endl;
   std::cout << "Total batches: " << stats_result.count << std::endl;
   std::cout << "Test duration: " << total_seconds << " seconds" << std::endl;
   std::cout << "Latency statistics (nanoseconds):" << std::endl;
