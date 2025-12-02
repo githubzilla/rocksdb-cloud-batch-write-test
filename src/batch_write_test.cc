@@ -352,6 +352,7 @@ int main(int argc, char **argv) {
   // Initialize AWS SDK if using S3
   Aws::SDKOptions aws_options;
   aws_options.httpOptions.installSigPipeHandler = true;
+  aws_options.loggingOptions.logLevel = Aws::Utils::Logging::LogLevel::Info;
   Aws::InitAPI(aws_options);
 
   // Initialize gflags and glog
