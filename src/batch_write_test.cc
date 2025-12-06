@@ -40,11 +40,13 @@
 #include "rate_limiter.h"
 #include "statistics.h"
 
+using ROCKSDB_NAMESPACE::BlockBasedTableOptions;
 using ROCKSDB_NAMESPACE::ColumnFamilyHandle;
 using ROCKSDB_NAMESPACE::ConfigOptions;
 using ROCKSDB_NAMESPACE::DB;
 using ROCKSDB_NAMESPACE::Env;
 using ROCKSDB_NAMESPACE::FileSystem;
+using ROCKSDB_NAMESPACE::NewBlockBasedTableFactory;
 using ROCKSDB_NAMESPACE::NewLRUCache;
 using ROCKSDB_NAMESPACE::Options;
 using ROCKSDB_NAMESPACE::Status;
@@ -65,6 +67,8 @@ DEFINE_int32(test_duration_seconds, 120,
 DEFINE_int32(value_size_bytes, 60, "Size of each value in bytes");
 DEFINE_int32(report_interval_seconds , 0,
              "Statistics report interval in seconds (0 means no periodic dump)");
+DEFINE_int64(block_cache_size, 0,
+             "Block cache size in bytes (0 means no block cache)");
 
 // Global stop flag for signal handler
 static std::atomic<bool> g_stop_requested(false);
@@ -376,6 +380,7 @@ int main(int argc, char **argv) {
   int test_duration_seconds = FLAGS_test_duration_seconds; // Default from command line
   int value_size_bytes = FLAGS_value_size_bytes; // Default from command line
   std::string batch_sizes_str = FLAGS_batch_sizes; // Default from command line
+  int64_t block_cache_size = FLAGS_block_cache_size; // Default from command line
 
   if (config.find("TestConfig") != config.end()) {
     auto &test_config = config["TestConfig"];
@@ -399,6 +404,20 @@ int main(int argc, char **argv) {
     }
   }
 
+  // Also check DBOptions section for block_cache_size
+  if (config.find("DBOptions") != config.end()) {
+    auto &db_config = config["DBOptions"];
+    if (db_config.find("block_cache_size") != db_config.end()) {
+      try {
+        block_cache_size = std::stoll(db_config["block_cache_size"]);
+      } catch (const std::exception &e) {
+        LOG(WARNING) << "Invalid block_cache_size value in DBOptions, using 0 (no cache): "
+                     << db_config["block_cache_size"];
+        block_cache_size = 0;
+      }
+    }
+  }
+
   // Command-line flags override INI config values if they differ from defaults
   // This allows INI config to be used unless user explicitly sets command-line flags
   if (FLAGS_test_duration_seconds != 120) {  // Default is 120
@@ -409,6 +428,9 @@ int main(int argc, char **argv) {
   }
   if (FLAGS_batch_sizes != "10000,50000,100000") {  // Default batch sizes
     batch_sizes_str = FLAGS_batch_sizes;
+  }
+  if (FLAGS_block_cache_size != 0) {  // Default is 0 (no cache)
+    block_cache_size = FLAGS_block_cache_size;
   }
 
   // Parse batch sizes
@@ -434,6 +456,8 @@ int main(int argc, char **argv) {
   LOG(INFO) << "Estimated total row size (key ~" << estimated_key_size 
             << " bytes + value " << value_size_bytes << " bytes): " 
             << (estimated_key_size + value_size_bytes) << " bytes";
+  LOG(INFO) << "Block cache size: " << block_cache_size 
+            << " bytes (" << (block_cache_size == 0 ? "disabled" : "enabled") << ")";
 
   // Create database directory if it doesn't exist
   if (!CreateDirectoryIfNotExists(FLAGS_db_path)) {
@@ -469,8 +493,12 @@ int main(int argc, char **argv) {
     auto &db_config = config["DBOptions"];
     
     // Build option string in format: "key1=value1;key2=value2;..."
+    // Skip block_cache_size as it's handled separately
     std::string options_str;
     for (const auto &pair : db_config) {
+      if (pair.first == "block_cache_size") {
+        continue;  // Skip, handled separately
+      }
       if (!options_str.empty()) {
         options_str += ";";
       }
@@ -485,6 +513,31 @@ int main(int argc, char **argv) {
         LOG(INFO) << "Applied DBOptions from INI config: " << options_str;
       }
     }
+  }
+
+  // Configure block cache if specified
+  std::shared_ptr<ROCKSDB_NAMESPACE::Cache> block_cache;
+  if (block_cache_size > 0) {
+    // Create block cache with default number of shard bits (6)
+    // This provides good concurrency for multi-threaded access
+    const int block_cache_num_shard_bits = 6;
+    block_cache = NewLRUCache(block_cache_size, block_cache_num_shard_bits);
+    
+    // Configure BlockBasedTableOptions to use the block cache
+    BlockBasedTableOptions table_options;
+    table_options.block_cache = block_cache;
+    table_options.cache_index_and_filter_blocks = true;
+    
+    // Set the table factory with block cache configuration
+    // Note: This will replace any existing table factory, but block cache
+    // configuration takes precedence when explicitly set
+    options.table_factory.reset(NewBlockBasedTableFactory(table_options));
+    
+    LOG(INFO) << "Block cache configured: " << block_cache_size 
+              << " bytes with " << block_cache_num_shard_bits << " shard bits"
+              << ", cache_index_and_filter_blocks=true";
+  } else {
+    LOG(INFO) << "Block cache disabled (size = 0)";
   }
 
   // Setup RocksDB-Cloud filesystem options
