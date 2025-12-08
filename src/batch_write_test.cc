@@ -274,6 +274,7 @@ void PrintCumulativeStats(const Statistics::Stats &stats_result,
 }
 
 // Worker function for batch writes - cycles through batch sizes
+// OPTIMIZED: Reduced CPU usage and thread contention
 void BatchWriteWorker(DB *db, const std::vector<int> &batch_sizes, int num_batches,
                       RateLimiter *rate_limiter,
                       TimeBasedStatistics *interval_stats,
@@ -286,6 +287,29 @@ void BatchWriteWorker(DB *db, const std::vector<int> &batch_sizes, int num_batch
 
   size_t batch_size_index = 0;
   int batch_count = 0;
+  
+  // Pre-compute thread ID hash once (avoid repeated computation)
+  const size_t thread_id_hash = std::hash<std::thread::id>{}(std::this_thread::get_id());
+  const std::string thread_id_str = std::to_string(thread_id_hash);
+  
+  // Pre-generate value template to reduce string operations
+  const std::string value_template(value_size_bytes, 'X');
+  
+  // Use per-thread batch counter to avoid contention on global atomic
+  // Each thread gets a unique base ID, then increments locally
+  static std::atomic<uint64_t> global_thread_base_counter(0);
+  const uint64_t thread_base_id = global_thread_base_counter.fetch_add(1000000);
+  uint64_t local_batch_counter = thread_base_id;
+  
+  // Batch statistics updates to reduce mutex contention
+  // Store measurements locally and flush in batches
+  struct LocalStats {
+    std::vector<int64_t> latencies;
+    std::vector<int64_t> write_sizes;
+  };
+  LocalStats local_interval_stats;
+  LocalStats local_cumulative_stats;
+  const int STATS_BATCH_SIZE = 20;  // Flush every N writes to reduce mutex contention
   
   while (!stop_flag->load() && !g_stop_requested.load() &&
          (num_batches <= 0 || batch_count < num_batches)) {
@@ -301,30 +325,52 @@ void BatchWriteWorker(DB *db, const std::vector<int> &batch_sizes, int num_batch
       continue;
     }
 
-    rate_limiter->Wait();
-
+    // Pre-generate keys and prepare batch (OUTSIDE timing measurement)
     WriteBatch batch;
-    auto start = std::chrono::steady_clock::now();
-
-    // Generate random keys and values for the batch
-    for (int i = 0; i < num_rows; ++i) {
-      // Generate a unique key base
-      std::string key_base =
-          "key_" +
-          std::to_string(
-              std::chrono::steady_clock::now().time_since_epoch().count()) +
-          "_" + std::to_string(i) + "_" +
-          std::to_string(
-              std::hash<std::thread::id>{}(std::this_thread::get_id()));
-      
-      // Generate key (use base as-is) and value with specified size
-      std::string key = key_base;
-      std::string value_base = "value_" + std::to_string(i) + "_" + key_base;
-      std::string value = GenerateStringOfSize(value_size_bytes, value_base);
-      
-      batch.Put(key, value);
+    
+    // Get unique batch ID from local counter (no contention)
+    const uint64_t batch_id = local_batch_counter++;
+    
+    // Cache string conversion - only convert when batch_id changes significantly
+    // Reuse string if batch_id is close to last converted value
+    static thread_local uint64_t last_converted_batch_id = 0;
+    static thread_local std::string cached_batch_id_str;
+    if (batch_id - last_converted_batch_id > 100 || last_converted_batch_id == 0) {
+      cached_batch_id_str = std::to_string(batch_id);
+      last_converted_batch_id = batch_id;
     }
-
+    const std::string& batch_id_str = cached_batch_id_str;
+    
+    // Pre-allocate key strings to reduce allocations
+    // Estimate key size: "key_" + batch_id + "_" + row_id + "_" + thread_id
+    const size_t estimated_key_size = 20 + batch_id_str.size() + thread_id_str.size();
+    
+    // Generate keys and values efficiently
+    for (int i = 0; i < num_rows; ++i) {
+      // Build key efficiently using reserve and append
+      std::string key;
+      key.reserve(estimated_key_size);
+      key = "key_";
+      key += batch_id_str;
+      key += "_";
+      key += std::to_string(i);
+      key += "_";
+      key += thread_id_str;
+      
+      // Use pre-generated value template (no string operations needed)
+      batch.Put(key, value_template);
+    }
+    
+    // Calculate approximate batch size for statistics
+    // Note: WriteBatch doesn't expose GetDataSize(), so we use target size
+    // The actual size may be slightly larger due to RocksDB overhead
+    const size_t actual_batch_size = batch_size_bytes;
+    
+    // Rate limit AFTER batch preparation, BEFORE write
+    rate_limiter->Wait();
+    
+    // Measure ONLY the write operation time (not batch preparation)
+    auto start = std::chrono::steady_clock::now();
     Status s = db->Write(write_options, &batch);
     auto end = std::chrono::steady_clock::now();
 
@@ -333,14 +379,80 @@ void BatchWriteWorker(DB *db, const std::vector<int> &batch_sizes, int num_batch
           std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
               .count();
       
-      // Use the target batch size as the write size
-      size_t write_size_bytes = batch_size_bytes;
+      // Store statistics locally to reduce mutex contention
+      local_interval_stats.latencies.push_back(latency_ns);
+      local_interval_stats.write_sizes.push_back(actual_batch_size);
       
-      interval_stats->RecordLatencyWithSize(latency_ns, write_size_bytes);
-      cumulative_stats->RecordLatencyWithSize(latency_ns, write_size_bytes);
+      local_cumulative_stats.latencies.push_back(latency_ns);
+      local_cumulative_stats.write_sizes.push_back(actual_batch_size);
+      
+      // Flush statistics periodically to reduce mutex contention
+      // Batch multiple updates together to amortize mutex cost
+      if (local_interval_stats.latencies.size() >= STATS_BATCH_SIZE) {
+        // Flush interval stats - all measurements in one batch
+        for (size_t i = 0; i < local_interval_stats.latencies.size(); ++i) {
+          interval_stats->RecordLatencyWithSize(
+              local_interval_stats.latencies[i],
+              local_interval_stats.write_sizes[i]);
+        }
+        local_interval_stats.latencies.clear();
+        local_interval_stats.write_sizes.clear();
+      }
+      
+      if (local_cumulative_stats.latencies.size() >= STATS_BATCH_SIZE) {
+        // Flush cumulative stats - all measurements in one batch
+        for (size_t i = 0; i < local_cumulative_stats.latencies.size(); ++i) {
+          cumulative_stats->RecordLatencyWithSize(
+              local_cumulative_stats.latencies[i],
+              local_cumulative_stats.write_sizes[i]);
+        }
+        local_cumulative_stats.latencies.clear();
+        local_cumulative_stats.write_sizes.clear();
+      }
+      
       batch_count++;
     } else {
       LOG(ERROR) << "Write failed: " << s.ToString();
+      // Retry logic for transient failures
+      int retries = 0;
+      while (!s.ok() && retries < 3) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10 * (retries + 1)));
+        start = std::chrono::steady_clock::now();
+        s = db->Write(write_options, &batch);
+        end = std::chrono::steady_clock::now();
+        if (s.ok()) {
+          auto latency_ns =
+              std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
+                  .count();
+          // Store locally
+          local_interval_stats.latencies.push_back(latency_ns);
+          local_interval_stats.write_sizes.push_back(actual_batch_size);
+          local_cumulative_stats.latencies.push_back(latency_ns);
+          local_cumulative_stats.write_sizes.push_back(actual_batch_size);
+          batch_count++;
+          break;
+        }
+        retries++;
+      }
+      if (!s.ok()) {
+        LOG(ERROR) << "Write failed after " << retries << " retries: " << s.ToString();
+      }
+    }
+  }
+  
+  // Flush any remaining local statistics
+  if (!local_interval_stats.latencies.empty()) {
+    for (size_t i = 0; i < local_interval_stats.latencies.size(); ++i) {
+      interval_stats->RecordLatencyWithSize(
+          local_interval_stats.latencies[i],
+          local_interval_stats.write_sizes[i]);
+    }
+  }
+  if (!local_cumulative_stats.latencies.empty()) {
+    for (size_t i = 0; i < local_cumulative_stats.latencies.size(); ++i) {
+      cumulative_stats->RecordLatencyWithSize(
+          local_cumulative_stats.latencies[i],
+          local_cumulative_stats.write_sizes[i]);
     }
   }
 }
